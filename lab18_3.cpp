@@ -8,9 +8,11 @@
 using namespace std;
 
 struct student{
-
-    //Define struct student with four member (name ,id , gender, gpa);
-    
+	//Define struct student with four member (name ,id , gender, gpa);
+	string name;
+	int id;
+	char gender;
+	double gpa;
 };
 
 struct course{
@@ -21,7 +23,9 @@ struct course{
 };
 
 student * findstudent(vector<student> allstudents,int key){ //There is something wrong in this line.
+	// cout 
 	for(unsigned int i = 0; i < allstudents.size(); i++){
+		// cout << allstudents[i].id;
 		if(allstudents[i].id  == key) return &allstudents[i];
 	}
 	return 0;
@@ -65,7 +69,10 @@ int main(){
 		student s; 
 		
 		//Use sscanf() to split the values in textline and assign those values to the members of struct s;
-
+    char name[100];
+		sscanf(textline.c_str(),"%[^,],%d,%c,%lf",name,&s.id,&s.gender,&s.gpa);
+	  s.name = name;
+		cout << s.gpa;
 		allstudents.push_back(s); 		
 	}
 	
@@ -83,18 +90,16 @@ int main(){
 			if(textline == "> Students"){
 				state = 3;
 			}else{
-			
-			    //Append (push_back) textline to lecture_list[] of the recently added course in allcourses[];
-			    
+				//Append (push_back) textline to lecture_list[] of the recently added course in allcourses[];
+				allcourses.back().lecture_list.push_back(textline.c_str());
 			}			
 		}else{
 			if(textline == "---------------------------------------"){
 				state = 1;
 			}else{
 				student *p = findstudent(allstudents,atof(textline.c_str()));
-				
 				//Append (push_back) p to student_list of the recently added course in allcourses[];
-				
+				allcourses.back().student_list.push_back(p);
 			}
 		}
 	}
